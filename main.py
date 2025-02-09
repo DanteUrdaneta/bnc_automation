@@ -45,7 +45,7 @@ def  login(credenciales):
   password = driver.find_element(By.NAME, login_buttons[3])
   password.send_keys(credenciales['password'])
 
-  button = driver.find_element(By.ID, login_buttons[2])
+  button = driver.fin_element(By.ID, login_buttons[2])
   button.click()
   
 def debitar_bs_cuenta():
@@ -73,24 +73,29 @@ def monto(usd):
 def confirmar():
     element = driver.find_element(By.XPATH, """//*[@id="Frm_Purchase_Verify"]/div/div[9]/div/div[1]/button""")
     element.click()
-    control = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.ID, "ControlNumber"))
-)
-    control.send_keys('54713322') # PONER NUMERO DE CONTROL DE LAS CORDENADAS
-    cordenada = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.XPATH, """//*[@id="Frm_AuthFactor_Set"]/div/div/div[2]/div/div/div/div/div/span""")))    
-    cor = cordenada.text #example D-9
-    # separar la cordenada
-    cordenadas = cor.split('-')
-    cor = df.loc[int(cordenadas[1])-1, cordenadas[0]]
-    print(cor)
-    input = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.ID, "Value"))
-    )
-    input.send_keys(cor)
+    time.sleep(3)
+    try:
+      control = WebDriverWait(driver, 10).until(
+      EC.presence_of_element_located((By.ID, "ControlNumber"))
+  )
+      control.send_keys('54713322') # PONER NUMERO DE CONTROL DE LAS CORDENADAS
+      cordenada = WebDriverWait(driver, 10).until(
+      EC.presence_of_element_located((By.XPATH, """//*[@id="Frm_AuthFactor_Set"]/div/div/div[2]/div/div/div/div/div/span""")))    
+      cor = cordenada.text #example D-9
+      # separar la cordenada
+      cordenadas = cor.split('-')
+      cor = df.loc[int(cordenadas[1])-1, cordenadas[0]]
+      print(cor)
+      input = WebDriverWait(driver, 10).until(
+      EC.presence_of_element_located((By.ID, "Value"))
+      )
+      input.send_keys(cor)
     
-    submit = driver.find_element(By.XPATH, """//*[@id="Mdl-Content2"]/div/div/div[2]/div[2]/button[1]""")
-    submit.click()
+      submit = driver.find_element(By.XPATH, """//*[@id="Mdl-Content2"]/div/div/div[2]/div[2]/button[1]""")
+      submit.click()
+    except:
+      submit = driver.find_element(By.XPATH, """//*[@id="Mdl-Content2"]/div/div/div[2]/div[2]/button[1]""")
+      submit.click()
     
   
 login(credenciales)
