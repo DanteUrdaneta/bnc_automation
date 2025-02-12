@@ -45,7 +45,7 @@ def  login(credenciales):
   password = driver.find_element(By.NAME, login_buttons[3])
   password.send_keys(credenciales['password'])
 
-  button = driver.fin_element(By.ID, login_buttons[2])
+  button = driver.find_element(By.ID, login_buttons[2])
   button.click()
   
 def debitar_bs_cuenta():
@@ -78,14 +78,14 @@ def confirmar():
       control = WebDriverWait(driver, 10).until(
       EC.presence_of_element_located((By.ID, "ControlNumber"))
   )
-      control.send_keys('54713322') # PONER NUMERO DE CONTROL DE LAS CORDENADAS
+      control.send_keys('29305558') # PONER NUMERO DE CONTROL DE LAS CORDENADAS
       cordenada = WebDriverWait(driver, 10).until(
       EC.presence_of_element_located((By.XPATH, """//*[@id="Frm_AuthFactor_Set"]/div/div/div[2]/div/div/div/div/div/span""")))    
       cor = cordenada.text #example D-9
       # separar la cordenada
       cordenadas = cor.split('-')
       cor = df.loc[int(cordenadas[1])-1, cordenadas[0]]
-      print(cor)
+      print(f"poniendo cordenadas {cor}")
       input = WebDriverWait(driver, 10).until(
       EC.presence_of_element_located((By.ID, "Value"))
       )
@@ -93,9 +93,13 @@ def confirmar():
     
       submit = driver.find_element(By.XPATH, """//*[@id="Mdl-Content2"]/div/div/div[2]/div[2]/button[1]""")
       submit.click()
+      time.sleep(1)
+      print('compra exitosa')
     except:
       submit = driver.find_element(By.XPATH, """//*[@id="Mdl-Content2"]/div/div/div[2]/div[2]/button[1]""")
       submit.click()
+      print('compra exitosa')
+      time.sleep(1)
     
   
 login(credenciales)
@@ -117,8 +121,7 @@ while True:
     monto(20)
     time.sleep(1)
     confirmar()
-    time.sleep(1)
+    
 
   except:
-    print('error')
-    driver.get('https://personas.bncenlinea.com/ForeignExchange/ForeignExchange/Purchase')
+    print('bucle terminado recargando pagina')
