@@ -29,7 +29,6 @@ time.sleep(5)
 
 def  login(credenciales):
   login_buttons = ['CardNumber', 'UserID', 'BtnSend', 'UserPassword']
-  login_credentials = ['5410360004255395','28391082','10102020Dl.']
 
   cardnumber = driver.find_element(By.NAME, login_buttons[0])
   cardnumber.send_keys(credenciales['cuenta'])
